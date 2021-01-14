@@ -1545,6 +1545,7 @@ GameObject:
   - component: {fileID: 813905563}
   - component: {fileID: 813905567}
   - component: {fileID: 813905566}
+  - component: {fileID: 813905568}
   m_Layer: 0
   m_Name: "\u5357\u74DC"
   m_TagString: Untagged
@@ -1672,6 +1673,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &813905568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813905562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f244addb5dbcf6a48aa2e42a42f4b2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 50
+  hp: 999.9
+  coin: 0
+  height: 500
+  soundJunp: {fileID: 8300000, guid: fa2caff4210897345a6a41feb3ceda4d, type: 3}
+  soundSlide: {fileID: 8300000, guid: ff3df9ad72a35c7439129f84df1dd5b1, type: 3}
+  soundHit: {fileID: 8300000, guid: cca096d82267fea4ca3ec76f73cfb724, type: 3}
+  dead: 0
 --- !u!1001 &842208663
 PrefabInstance:
   m_ObjectHideFlags: 0
