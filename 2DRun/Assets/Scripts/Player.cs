@@ -19,7 +19,28 @@ public class Player : MonoBehaviour
     [Header("角色是否死亡"), Tooltip("True 代表死亡, False 代表尚未死亡")]
     public bool dead;
 
+    [Header("動畫控制器")]
+    public Animator ani;
+
+    [Header("膠囊碰撞器")]
+    public CapsuleCollider2D cc2d;
+
+    [Header("剛體")]
+    public Rigidbody2D rig;
+
+    public bool isGround;
     #endregion
+
+    /// <summary>
+    /// 移動
+    /// </summary>
+    private void Move()
+    {
+        if (rig.velocity.magnitude < 10)
+        {
+            rig.AddForce(new Vector2(speed, 0));
+        }
+    }
 
     #region 方法區域
     /// <summary>
@@ -27,7 +48,19 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Jump()
     {
+        // 布林值 = 輸入.取得按鍵(按鍵代碼列舉.Space)
+        bool jump = Input.GetKey(KeyCode.LeftAlt);
+        ani.SetBool("跳躍開關", !isGround);
 
+        //如果在地板上
+        if (isGround)
+        {
+            if (jump)
+            {
+                isGround = false;
+                rig.AddForce(new Vector2(0, height));
+            }
+        }
     }
 
     /// <summary>
@@ -35,6 +68,20 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Slide()
     {
+        // 布林值 = 輸入.取得按鍵(按鍵代碼列舉.左邊ctrl)
+        bool key = Input.GetKey(KeyCode.LeftControl);
+        ani.SetBool("滑行開關", key);
+
+        if (key)
+        {
+            cc2d.offset = new Vector2(0f, -2.3f);
+            cc2d.size = new Vector2(2.5f, 2f);
+        }
+        else
+        {
+            cc2d.offset = new Vector2(-0.7f, 0f);
+            cc2d.size = new Vector2(2.5f, 7f);
+        }
 
     }
 
@@ -69,7 +116,7 @@ public class Player : MonoBehaviour
     //初始化
     private void Start()
     {
-
+        Slide();
     }
 
     //更新 Update
@@ -77,7 +124,21 @@ public class Player : MonoBehaviour
     //移動、監聽玩家鍵盤、滑鼠與觸控
     private void Update()
     {
-        
+        Jump();
+        Move();
+    }
+
+    /// <summary>
+    /// 碰撞事件:碰到物件開始執行一次
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "地板")
+        {
+            //是否在地板上 = 是
+            isGround = true;
+        }
     }
     #endregion
 }
